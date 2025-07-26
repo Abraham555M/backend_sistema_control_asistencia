@@ -1,0 +1,39 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Intranet",
+        "description": "Documentación de la API para el sistema de asistencia / intranet",
+        "contact": {
+            "email": "tu-correo@ejemplo.com"
+        },
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://my-default-host.com",
+            "description": "Servidor principal"
+        }
+    ],
+    "paths": {
+        "/api/generos": {
+            "get": {
+                "tags": [
+                    "Género"
+                ],
+                "summary": "Listar géneros",
+                "operationId": "e4145cae641529449a72267155866544",
+                "responses": {
+                    "200": {
+                        "description": "Lista de géneros"
+                    }
+                }
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Género",
+            "description": "Género"
+        }
+    ]
+}

@@ -17,6 +17,7 @@ return new class extends Migration
             $table->date("fch_fin_permiso"); // fecha fin
             $table->text("mot_permiso")->nullable();
             $table->integer("est_permiso")->default(1);
+
             $table->unsignedBigInteger('id_empleado');
             $table->foreign('id_empleado')->references('id_empleado')->on('empleado');
             $table->timestamps();
