@@ -17,10 +17,15 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    protected $table = 'usuario';              // Tu tabla personalizada
+    protected $primaryKey = 'id_usuario';
+
+    // Campos que se pueden llenar
     protected $fillable = [
-        'name',
-        'email',
-        'password',
+        'usr_usuario',
+        'pas_usuario',
+        'id_empleado',
+        'id_rol_usuario',
     ];
 
     /**
@@ -28,11 +33,26 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
+    // Ocultar contraseña cuando se serializa
     protected $hidden = [
-        'password',
-        'remember_token',
+        'pas_usuario',
     ];
+    // Si deseas autenticar con pas_usuario como password
+    public function getAuthPassword()
+    {
+        return $this->pas_usuario;
+    }
 
+    // Relación: este usuario pertenece a un empleado
+    public function empleado()
+    {
+        return $this->belongsTo(Empleado::class, 'id_empleado', 'id_empleado');
+    }
+    // Relación: este usuario tiene un rol
+    public function rol()
+    {
+        return $this->belongsTo(RolUsuario::class, 'id_rol_usuario', 'id_rol_usuario');
+    }
     /**
      * Get the attributes that should be cast.
      *

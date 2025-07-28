@@ -20,11 +20,31 @@
                 "tags": [
                     "Género"
                 ],
-                "summary": "Listar géneros",
+                "summary": "Obtiene todos los géneros",
                 "operationId": "e4145cae641529449a72267155866544",
                 "responses": {
                     "200": {
-                        "description": "Lista de géneros"
+                        "description": "Lista de géneros",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "properties": {
+                                            "id_genero": {
+                                                "type": "integer",
+                                                "example": 1
+                                            },
+                                            "nom_genero": {
+                                                "type": "string",
+                                                "example": "Acción"
+                                            }
+                                        },
+                                        "type": "object"
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
