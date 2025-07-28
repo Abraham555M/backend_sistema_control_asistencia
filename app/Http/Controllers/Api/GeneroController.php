@@ -7,7 +7,7 @@ use Illuminate\Http\Request;
 
 class GeneroController extends Controller
 {
-     /**
+    /**
      * @OA\Get(
      *     path="/api/generos",
      *     summary="Obtiene todos los géneros",
@@ -19,12 +19,12 @@ class GeneroController extends Controller
      *             type="array",
      *             @OA\Items(
      *                 @OA\Property(property="id_genero", type="integer", example=1),
-     *                 @OA\Property(property="nom_genero", type="string", example="Acción")
+     *                 @OA\Property(property="nom_genero", type="string", example="Masculino")
      *             )
      *         )
      *     )
      * )
-     */ 
+     */
 
     public function index()
     {

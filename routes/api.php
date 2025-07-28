@@ -1,9 +1,8 @@
 <?php
-
 use App\Http\Controllers\Api\GeneroController;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\EmpleadoController;
 
+Route::prefix('/generos')->group(function () {
+    Route::get('/', [GeneroController::class, 'index']);
 
-Route::get('/generos', [GeneroController::class, 'index']);
+});
+
