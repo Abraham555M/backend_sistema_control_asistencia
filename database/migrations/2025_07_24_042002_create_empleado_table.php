@@ -15,6 +15,7 @@ return new class extends Migration
             $table->id("id_empleado");
             $table->string(column: "nom_empleado");
             $table->string("ape_empleado");
+            $table->string('fch_nac_empleado');
             $table->string("ema_empleado")->unique();
             $table->string("doc_empleado",8)->unique();
             $table->string("tel_empleado", 9);
