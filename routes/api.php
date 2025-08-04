@@ -1,6 +1,8 @@
 <?php
 use App\Http\Controllers\Api\EmpleadoController;
 use App\Http\Controllers\Api\GeneroController;
+use App\Http\Controllers\Api\IncidenciaController;
+use App\Http\Controllers\Api\PermisoController;
 use App\Http\Controllers\Api\TipoIncidenciaController;
 
 Route::prefix('/generos')->group(function () {
@@ -19,3 +21,16 @@ Route::prefix('/empleados')->group(function(){
 
 });
 
+Route::prefix('/permisos')->group(function(){
+    Route::get('/lista-permisos', [PermisoController::class, 'listarPermisos']);
+    Route::post('/crear-permiso', [PermisoController::class, 'crearPermiso']);
+    Route::put('/actualizar-permiso/{id_permiso}', [PermisoController::class, 'actualizarPermiso']);
+});
+
+Route::prefix('/incidencias')->group(function(){
+    Route::get('/lista-incidencias', [IncidenciaController::class, 'listarIncidencias']);
+    Route::post('/crear-incidencia', [IncidenciaController::class, 'crearIncidencia']);
+    Route::put('/eliminar-incidencia/{id_incidencia}', [IncidenciaController::class, 'eliminarIncidencia']);
+
+
+});

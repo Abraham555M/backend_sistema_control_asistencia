@@ -15,6 +15,8 @@ return new class extends Migration
             $table->id("id_incidencia");
             $table->date("fch_incidencia");
             $table->text("des_incidencia")->nullable();
+            $table->integer("est_incidencia")->default(1);
+
 
             $table->unsignedBigInteger('id_tipo_incidencia');
             $table->foreign('id_tipo_incidencia')->references('id_tipo_incidencia')->on('tipo_incidencia');
