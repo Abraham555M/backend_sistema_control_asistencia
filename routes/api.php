@@ -1,6 +1,7 @@
 <?php
 use App\Http\Controllers\Api\EmpleadoController;
 use App\Http\Controllers\Api\GeneroController;
+use App\Http\Controllers\Api\HorarioController;
 use App\Http\Controllers\Api\IncidenciaController;
 use App\Http\Controllers\Api\PermisoController;
 use App\Http\Controllers\Api\TipoIncidenciaController;
@@ -33,4 +34,10 @@ Route::prefix('/incidencias')->group(function(){
     Route::put('/eliminar-incidencia/{id_incidencia}', [IncidenciaController::class, 'eliminarIncidencia']);
 
 
+});
+
+Route::prefix('/horarios')->group(function(){
+    Route::get('/lista-horarios', [HorarioController::class, 'listarHorarios']);
+    Route::post('/crear-horario', [HorarioController::class, 'crearHorario']);
+    Route::put('/actualizar-horario/{id_horario}', [HorarioController::class, 'actualizarPermiso']);
 });
