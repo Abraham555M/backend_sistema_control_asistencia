@@ -26,6 +26,7 @@ class EmpleadoController extends Controller
     public function crearEmpleado(Request $request){
         $request->validate([
             'id_genero' => 'required',
+            'id_rol_usuario' => 'required',
 
             'nom_empleado' => 'required|string|max:100',
             'ape_empleado' => 'required|string|max:100',
@@ -43,6 +44,7 @@ class EmpleadoController extends Controller
             'doc_empleado' => $request -> doc_empleado,
             'tel_empleado' => $request -> tel_empleado,
             'id_genero' => $request -> id_genero,
+            'id_rol_usuario' => $request -> id_rol_usuario,
             'fch_reg_empleado' => now()->toDateString(), // Solo se guarda la fecha
             'est_empleado' => 1
         ]);
@@ -74,6 +76,7 @@ class EmpleadoController extends Controller
 
        $request->validate([
             'id_genero' => 'required',
+            'id_rol_usuario' => 'required',
 
             'nom_empleado' => 'required|string|max:100',
             'ape_empleado' => 'required|string|max:100',
@@ -90,6 +93,7 @@ class EmpleadoController extends Controller
             'ema_empleado' => $request -> ema_empleado,
             'tel_empleado' => $request -> tel_empleado,
             'id_genero' => $request -> id_genero,
+            'id_rol_usuario' => $request -> id_rol_usuario,
         ]);
 
         return ResponseHelper::success($empleado, 'Empleado actualizado correctamente');

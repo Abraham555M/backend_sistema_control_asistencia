@@ -58,7 +58,6 @@ class UserController extends Controller
         // Crear el usuario con contraseña hasheada
         $usuario = User::create([
             'id_empleado' => $registro->id_empleado,
-            'id_rol_usuario' => 2,
             'usr_usuario' => $request->usr_usuario,
             'pas_usuario' => Hash::make($request->pas_usuario) // Encryptar
         ]);

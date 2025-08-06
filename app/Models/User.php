@@ -17,7 +17,7 @@ class User extends Authenticatable
      *
      * @var list<string>
      */
-    protected $table = 'usuario';             
+    protected $table = 'usuario';
     protected $primaryKey = 'id_usuario';
 
     // Campos que se pueden llenar
@@ -25,7 +25,6 @@ class User extends Authenticatable
         'usr_usuario',
         'pas_usuario',
         'id_empleado',
-        'id_rol_usuario',
     ];
 
     /**
@@ -48,11 +47,7 @@ class User extends Authenticatable
     {
         return $this->belongsTo(Empleado::class, 'id_empleado', 'id_empleado');
     }
-    // Relación: este usuario tiene un rol
-    public function rol()
-    {
-        return $this->belongsTo(RolUsuario::class, 'id_rol_usuario', 'id_rol_usuario');
-    }
+
     /**
      * Get the attributes that should be cast.
      *

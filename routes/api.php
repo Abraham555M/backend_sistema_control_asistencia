@@ -1,5 +1,6 @@
 <?php
 use App\Http\Controllers\Api\CuentaController;
+use App\Http\Controllers\Api\RolUsuarioController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EmpleadoController;
@@ -13,6 +14,10 @@ Route::prefix('/generos')->group(function () {
     Route::get('/lista-generos', [GeneroController::class, 'listarGeneros']);
     Route::post('/crear-genero', [GeneroController::class, 'crearGenero']);
 
+});
+
+Route::prefix('/rol-usuario')->group(function () {
+    Route::get('/lista-rol-usuario', [RolUsuarioController::class, 'listarRolUsuario']);
 });
 
 Route::prefix('/tipo-incidencia')->group(function(){

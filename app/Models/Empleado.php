@@ -14,6 +14,7 @@ class Empleado extends Model
 
     protected $fillable = [
         'id_genero',
+        'id_rol_usuario',
         'nom_empleado',
         'ape_empleado',
         'fch_nac_empleado',
@@ -27,6 +28,11 @@ class Empleado extends Model
      public function genero()
     {
         return $this->belongsTo(Genero::class, 'id_genero', 'id_genero');
+    }
+    // Relación: este usuario tiene un rol
+    public function rol()
+    {
+        return $this->belongsTo(RolUsuario::class, 'id_rol_usuario', 'id_rol_usuario');
     }
 
     public function horarios()
@@ -49,4 +55,5 @@ class Empleado extends Model
     {
         return $this->hasMany(User::class, 'id_empleado', 'id_empleado');
     }
+
 }
