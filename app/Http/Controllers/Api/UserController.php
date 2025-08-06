@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
+use App\Models\PasswordCreation;
 use App\Models\User;
 use Auth;
 use Hash;
@@ -17,18 +18,17 @@ class UserController extends Controller
             'pas_usuario' => 'required'
         ]);
 
-        $user = User::where('usr_usuario', $request->usr_usuario)->first();
+        $usuario = User::where('usr_usuario', $request->usr_usuario)->first();
 
-        if (!$user || !Hash::check($request->pas_usuario, $user->pas_usuario)) {
+        if (!$usuario || !Hash::check($request->pas_usuario, $usuario->pas_usuario)) {
             return ResponseHelper::unauthorized('Credenciales inválidas');
         }
 
-        $token = $user->createToken('token-permisos')->plainTextToken;
+        $token = $usuario->createToken('token_login_user')->plainTextToken;
 
         $data = [
             'access_token' => $token,
-            'token_type' => 'Bearer',
-            'user' => $user
+            'user' => $usuario
         ];
 
         return ResponseHelper::success($data, 'Inicio de sesión exitoso');
@@ -36,38 +36,35 @@ class UserController extends Controller
 
     public function crearCuenta(Request $request){
         $request->validate([
-            "id_empleado" => 'required',
-            "usr_usuario" => 'required|unique:usuario,usr_usuario',
-            "pas_usuario" => 'required'
+            'token' => 'required|exists:password_creations,token',
+            'usr_usuario' => 'required|string|unique:usuario,usr_usuario|max:8|alpha_num',
+            'pas_usuario' => 'required|min:6|max:30|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'
         ]);
+
+        $registro = PasswordCreation::where('token', $request->token)->first();
+        if (!$registro || now()->diffInHours($registro->created_at) > 48) {
+            return response()->json(['message' => 'Token inválido o expirado'], 400);
+        }
 
         // Crear el usuario con contraseña hasheada
         $usuario = User::create([
-            'id_empleado' => $request->id_empleado,
-            'id_rol_usuario' => 1,
+            'id_empleado' => $registro->id_empleado,
+            'id_rol_usuario' => 2,
             'usr_usuario' => $request->usr_usuario,
-            'pas_usuario' => Hash::make($request->pas_usuario)
+            'pas_usuario' => Hash::make($request->pas_usuario) // Encryptar
         ]);
 
-        // Verificar manualmente la contraseña
-        if (!Hash::check($request->pas_usuario, $usuario->pas_usuario)) {
-            return response()->json([
-                'status' => false,
-                'message' => 'Error al autenticar después de crear la cuenta'
-            ], 401);
-        }
+        // Eliminar el token para evitar reuso
+        PasswordCreation::where('token', $request->token)->delete();
 
-        // Generar token con Sanctum
-        $token = $usuario->createToken('auth_token')->plainTextToken;
+        // Crear token Sanctum
+        $token = $usuario->createToken('token_create_user')->plainTextToken;
 
-        return response()->json([
-            'status' => true,
-            'message' => 'Usuario creado y autenticado',
-            'data' => [
-                'user' => $usuario,
-                'access_token' => $token,
-                'token_type' => 'Bearer'
-            ]
-        ]);
+        $data = [
+            'access_token' => $token,
+            'user' => $usuario
+        ];
+
+        return ResponseHelper::success($data, 'Cuenta creada correctamente');
     }
 }

@@ -4,8 +4,12 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
+use App\Mail\InvitacionCrearCuenta;
 use App\Models\Empleado;
+use App\Models\PasswordCreation;
 use Illuminate\Http\Request;
+use Mail;
+use Str;
 
 class EmpleadoController extends Controller
 {
@@ -21,8 +25,8 @@ class EmpleadoController extends Controller
             'nom_empleado' => 'required|string|max:100',
             'ape_empleado' => 'required|string|max:100',
             'fch_nac_empleado' => 'required|date|before:today',
-            'ema_empleado' => 'required|email',
-            'doc_empleado' => 'required|string|max:8',
+            'ema_empleado' => 'required|email|unique:empleado,ema_empleado',
+            'doc_empleado' => 'required|string|max:8|unique:empleado,doc_empleado',
             'tel_empleado' => 'required|string|max:20',
         ]);
 
@@ -37,6 +41,22 @@ class EmpleadoController extends Controller
             'fch_reg_empleado' => now()->toDateString(), // Solo se guarda la fecha
             'est_empleado' => 1
         ]);
+
+        // Generar token único
+        $token = Str::random(60);
+
+        // Guardar el token en la tabla
+        PasswordCreation::create([
+            'id_empleado' => $empleado->id_empleado,
+            'token' => $token,
+            'created_at' => now()
+        ]);
+
+        // Generar link
+        $link = url("/registrar-cuenta/{$token}"); // esto lo manejarás desde el frontend
+
+        // Enviar correo
+        Mail::to($empleado->ema_empleado)->send(new InvitacionCrearCuenta($empleado, $link));
 
         return ResponseHelper::success($empleado, 'Empleado creado');
     }

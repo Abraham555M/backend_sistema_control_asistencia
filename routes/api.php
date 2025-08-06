@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\Api\CuentaController;
 use App\Http\Controllers\Api\UserController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\Api\EmpleadoController;
@@ -54,6 +55,7 @@ Route::prefix('/horarios')->group(function(){
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/crear-cuenta', [UserController::class, 'crearCuenta']);
-
 });
+
+Route::get('/validar-token/{token}', [CuentaController::class, 'validarToken']);
 
