@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Api;
 
 use App\Helpers\ResponseHelper;
 use App\Http\Controllers\Controller;
+use App\Models\Empleado;
 use App\Models\PasswordCreation;
 use App\Models\User;
 use Auth;
@@ -24,6 +25,14 @@ class UserController extends Controller
             return ResponseHelper::unauthorized('Credenciales inválidas');
         }
 
+        // Verificar si el empleado asociado existe y está activo
+        $empleado = $usuario->empleado;
+
+        if (!$empleado || $empleado->est_empleado == 0) {
+            return ResponseHelper::unauthorized('No tiene acceso al sistema');
+        }
+
+        // Crear token
         $token = $usuario->createToken('token_login_user')->plainTextToken;
 
         $data = [

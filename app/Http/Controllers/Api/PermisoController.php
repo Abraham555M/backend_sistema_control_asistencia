@@ -34,7 +34,7 @@ class PermisoController extends Controller
     }
 
     public function actualizarPermiso(Request $request, $id_permiso){
-        $request -> validate([
+        $request->validate([
             'fch_ini_permiso' => 'required|date|after_or_equal:today',
             'fch_fin_permiso' => 'required|date|after_or_equal:fch_ini_permiso',
             'mot_permiso' => 'required|min:5|max:255'

@@ -22,6 +22,8 @@ Route::prefix('/tipo-incidencia')->group(function(){
 Route::prefix('/empleados')->group(function(){
     Route::get('/lista-empleados', [EmpleadoController::class, 'listarEmpleados']);
     Route::post('/crear-empleado', [EmpleadoController::class, 'crearEmpleado']);
+    Route::put('/actualizar-empleado/{id_empleado}', [EmpleadoController::class, 'actualizarEmpleado']);
+    Route::put('/eliminar-empleado/{id_empleado}', [EmpleadoController::class, 'eliminarEmpleado']);
 
 });
 

@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Mail\InvitacionCrearCuenta;
 use App\Models\Empleado;
 use App\Models\PasswordCreation;
+use App\Models\User;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
 use Mail;
 use Str;
@@ -14,7 +16,10 @@ use Str;
 class EmpleadoController extends Controller
 {
     public function listarEmpleados(){
-        $empleados = Empleado::select('id_empleado','nom_empleado','ape_empleado','tel_empleado','est_empleado')->get();
+        $empleados = Empleado::select('id_empleado','nom_empleado','ape_empleado','tel_empleado','est_empleado')
+            ->get()
+            ->where('est_empleado',1);
+
         return ResponseHelper::success($empleados, 'Lista de empleados');
     }
 
@@ -60,4 +65,46 @@ class EmpleadoController extends Controller
 
         return ResponseHelper::success($empleado, 'Empleado creado');
     }
+
+    public function actualizarEmpleado(Request $request, $id_empleado){
+        $empleado = Empleado::find($id_empleado);
+        if (!$empleado) {
+            return ResponseHelper::notFound("Empleado no encontrado");
+        }
+
+       $request->validate([
+            'id_genero' => 'required',
+
+            'nom_empleado' => 'required|string|max:100',
+            'ape_empleado' => 'required|string|max:100',
+            'fch_nac_empleado' => 'required|date|before:today',
+            // Debe ser único en la tabla, excepto para el registro actual
+            'ema_empleado' => 'required|email|unique:empleado,ema_empleado,' . $id_empleado . ',id_empleado',
+            'tel_empleado' => 'required|string|max:20',
+        ]);
+
+        $empleado->update([
+            'nom_empleado' => $request -> nom_empleado,
+            'ape_empleado' => $request -> ape_empleado,
+            'fch_nac_empleado' => $request -> fch_nac_empleado,
+            'ema_empleado' => $request -> ema_empleado,
+            'tel_empleado' => $request -> tel_empleado,
+            'id_genero' => $request -> id_genero,
+        ]);
+
+        return ResponseHelper::success($empleado, 'Empleado actualizado correctamente');
+    }
+
+    public function eliminarEmpleado($id_empleado){
+        $empleado = Empleado::find($id_empleado);
+        if (!$empleado) {
+            return ResponseHelper::notFound("Empleado no encontrado");
+        }
+
+        $empleado -> est_empleado = 0;
+        $empleado -> save();
+
+        return ResponseHelper::success($empleado, 'Empleado eliminado correctamente');
+    }
+
 }
