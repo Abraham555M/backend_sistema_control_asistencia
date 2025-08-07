@@ -5,8 +5,10 @@ namespace Database\Seeders;
 use App\Models\Genero;
 use App\Models\RolUsuario;
 use App\Models\TipoIncidencia;
+use App\Models\TipoPermiso;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use Database\Factories\TipoPermisoFactory;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -26,5 +28,7 @@ class DatabaseSeeder extends Seeder
         Genero::factory()->count(3)->create();
         TipoIncidencia::factory()->count(8)->create();
         RolUsuario::factory()->count(2)->create();
+        TipoPermiso::factory()->count(8)->create();
+
     }
 }

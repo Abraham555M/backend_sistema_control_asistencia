@@ -28,15 +28,18 @@ Route::prefix('/empleados')->group(function(){
     Route::get('/lista-empleados', [EmpleadoController::class, 'listarEmpleados']);
     Route::post('/crear-empleado', [EmpleadoController::class, 'crearEmpleado']);
     Route::put('/actualizar-empleado/{id_empleado}', [EmpleadoController::class, 'actualizarEmpleado']);
-    Route::put('/eliminar-empleado/{id_empleado}', [EmpleadoController::class, 'eliminarEmpleado']);
+    Route::delete('/eliminar-empleado/{id_empleado}', [EmpleadoController::class, 'eliminarEmpleado']);
 
 });
 
- Route::middleware('auth:sanctum')->prefix('/permisos')->group(function () {
-    Route::get('/lista-permisos', [PermisoController::class, 'listarPermisos']);
-    Route::post('/crear-permiso', [PermisoController::class, 'crearPermiso']);
+Route::middleware('auth:sanctum')->prefix('/permisos')->group(function () {
+    Route::get('/lista-permisos', action: [PermisoController::class, 'listarPermisos']);
+    Route::post('/crear-permiso/{id_empleado}', [PermisoController::class, 'crearPermiso']);
     Route::put('/actualizar-permiso/{id_permiso}', [PermisoController::class, 'actualizarPermiso']);
-    });
+    Route::delete('/eliminar-permiso/{id_permiso}', [PermisoController::class, 'eliminarPermiso']);
+    Route::get('/filtrar-fecha', [PermisoController::class, 'filtrarPermisoPorFecha']);
+    Route::get('/filtrar-tipo', [PermisoController::class, 'filtrarPermisoPorTipo']);
+});
 
 /**
     Route::middleware('auth:sanctum')->prefix('/permisos')->group(function () {
@@ -48,8 +51,8 @@ Route::prefix('/empleados')->group(function(){
 
 Route::prefix('/incidencias')->group(function(){
     Route::get('/lista-incidencias', [IncidenciaController::class, 'listarIncidencias']);
-    Route::post('/crear-incidencia', [IncidenciaController::class, 'crearIncidencia']);
-    Route::put('/eliminar-incidencia/{id_incidencia}', [IncidenciaController::class, 'eliminarIncidencia']);
+    Route::post('/crear-incidencia/{id_empleado}', [IncidenciaController::class, 'crearIncidencia']);
+    Route::delete('/eliminar-incidencia/{id_incidencia}', [IncidenciaController::class, 'eliminarIncidencia']);
 
 });
 

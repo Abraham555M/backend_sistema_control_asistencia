@@ -14,6 +14,7 @@ class Permiso extends Model
 
     protected $fillable = [
         'id_empleado',
+        'id_tipo_permiso',
         'fch_ini_permiso',
         'fch_fin_permiso',
         'mot_permiso',
@@ -23,5 +24,9 @@ class Permiso extends Model
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'id_empleado', 'id_empleado');
+    }
+    public function tipo_permiso()
+    {
+        return $this->belongsTo(TipoPermiso::class, 'id_tipo_permiso', 'id_tipo_permiso');
     }
 }
