@@ -26,7 +26,6 @@ class EmpleadoController extends Controller
         $request->validate([
             'id_genero' => 'required',
             'id_rol_usuario' => 'required',
-
             'nom_empleado' => 'required|string|max:100',
             'ape_empleado' => 'required|string|max:100',
             'fch_nac_empleado' => 'required|date|before:today',
@@ -119,6 +118,6 @@ class EmpleadoController extends Controller
         return ResponseHelper::success($empleado, "Empleado obtenido correctamente");
     }
 
-    
+
     
 }

@@ -46,7 +46,6 @@ class UserController extends Controller
     public function crearCuenta(Request $request){
         $request->validate([
             'token' => 'required|exists:password_creations,token',
-            'usr_usuario' => 'required|string|unique:usuario,usr_usuario|max:8|alpha_num',
             'pas_usuario' => 'required|min:6|max:30|regex:/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[\W_]).+$/'
         ]);
 
@@ -55,10 +54,18 @@ class UserController extends Controller
             return response()->json(['message' => 'Token inválido o expirado'], 400);
         }
 
+        // Obtener al empleado
+        $empleado = Empleado::find($registro->id_empleado);
+        if (!$empleado) {
+            return ResponseHelper::notFound('Empleado no encontrado');
+        }
+
+        $usr_usuario = $empleado->doc_empleado;
+
         // Crear el usuario con contraseña hasheada
         $usuario = User::create([
             'id_empleado' => $registro->id_empleado,
-            'usr_usuario' => $request->usr_usuario,
+            'usr_usuario' => $usr_usuario,
             'pas_usuario' => Hash::make($request->pas_usuario) // Encryptar
         ]);
 
