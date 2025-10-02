@@ -32,6 +32,7 @@ class EmpleadoController extends Controller
             'ema_empleado' => 'required|email|unique:empleado,ema_empleado',
             'doc_empleado' => 'required|string|max:8|unique:empleado,doc_empleado',
             'tel_empleado' => 'required|string|max:20',
+            'img_empleado' => 'nullable|string'
         ]);
 
         $empleado = Empleado::create([
@@ -41,6 +42,7 @@ class EmpleadoController extends Controller
             'ema_empleado' => $request -> ema_empleado,
             'doc_empleado' => $request -> doc_empleado,
             'tel_empleado' => $request -> tel_empleado,
+            'img_empleado' => $request->img_empleado,
             'id_genero' => $request -> id_genero,
             'id_rol_usuario' => $request -> id_rol_usuario,
             'fch_reg_empleado' => now()->toDateString(), // Solo se guarda la fecha
@@ -79,7 +81,7 @@ class EmpleadoController extends Controller
             'nom_empleado' => 'required|string|max:100',
             'ape_empleado' => 'required|string|max:100',
             'fch_nac_empleado' => 'required|date|before:today',
-            // Debe ser único en la tabla, excepto para el registro actual
+            'img_empleado' => 'nullable|string',
             'ema_empleado' => 'required|email|unique:empleado,ema_empleado,' . $id_empleado . ',id_empleado',
             'tel_empleado' => 'required|string|max:20',
         ]);
@@ -90,6 +92,8 @@ class EmpleadoController extends Controller
             'fch_nac_empleado' => $request -> fch_nac_empleado,
             'ema_empleado' => $request -> ema_empleado,
             'tel_empleado' => $request -> tel_empleado,
+            'img_empleado' => $request -> img_empleado,
+            
             'id_genero' => $request -> id_genero,
             'id_rol_usuario' => $request -> id_rol_usuario,
         ]);

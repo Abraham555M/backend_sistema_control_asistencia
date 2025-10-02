@@ -15,10 +15,11 @@ return new class extends Migration
             $table->id("id_empleado");
             $table->string(column: "nom_empleado");
             $table->string("ape_empleado");
-            $table->string('fch_nac_empleado');
+            $table->date('fch_nac_empleado');
             $table->string("ema_empleado")->unique();
             $table->string("doc_empleado",8)->unique();
             $table->string("tel_empleado", 9);
+            $table->text("img_empleado")->nullable(); 
             $table->integer("est_empleado")->default(1);
             $table->date("fch_reg_empleado");
 

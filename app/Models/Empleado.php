@@ -21,6 +21,7 @@ class Empleado extends Model
         'ema_empleado',
         'doc_empleado',
         'tel_empleado',
+        'img_empleado',
         'est_empleado',
         'fch_reg_empleado'
     ];
