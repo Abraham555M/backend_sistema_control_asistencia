@@ -29,7 +29,7 @@ Route::prefix('/empleados')->group(function(){
     Route::post('/crear-empleado', [EmpleadoController::class, 'crearEmpleado']);
     Route::put('/actualizar-empleado/{id_empleado}', [EmpleadoController::class, 'actualizarEmpleado']);
     Route::delete('/eliminar-empleado/{id_empleado}', [EmpleadoController::class, 'eliminarEmpleado']);
-
+    Route::get('/obtener-empleado/{id_empleado}', [EmpleadoController::class, 'obtenerEmpleado']);
 });
 
 Route::middleware('auth:sanctum')->prefix('/permisos')->group(function () {
@@ -65,6 +65,10 @@ Route::prefix('/horarios')->group(function(){
 Route::prefix('/auth')->group(function () {
     Route::post('/login', [UserController::class, 'login']);
     Route::post('/crear-cuenta', [UserController::class, 'crearCuenta']);
+});
+
+Route::middleware('auth:sanctum')->prefix('/auth')->group(function () {
+       Route::post('/logout', [UserController::class, 'logout']);
 });
 
 Route::get('/validar-token/{token}', [CuentaController::class, 'validarToken']);

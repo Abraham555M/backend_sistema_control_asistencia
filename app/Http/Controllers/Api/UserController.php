@@ -7,8 +7,8 @@ use App\Http\Controllers\Controller;
 use App\Models\Empleado;
 use App\Models\PasswordCreation;
 use App\Models\User;
-use Auth;
-use Hash;
+use Illuminate\Support\Facades\Auth; 
+use Illuminate\Support\Facades\Hash; 
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -75,4 +75,13 @@ class UserController extends Controller
 
         return ResponseHelper::success($data, 'Cuenta creada correctamente');
     }
+
+    public function logout(Request $request){
+        // Revoca solo el token actual
+        $request->user()->currentAccessToken()->delete();
+
+        return ResponseHelper::success(null, 'Sesión cerrada correctamente');
+    }
+
+
 }

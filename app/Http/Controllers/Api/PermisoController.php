@@ -111,7 +111,6 @@ class PermisoController extends Controller
         }
 
         $permisos = Permiso::where('id_tipo_permiso', $tipo)->get();
-
         if($permisos->isEmpty()){
             return ResponseHelper::notFound('No se encontraron permisos para ese tipo');
         }

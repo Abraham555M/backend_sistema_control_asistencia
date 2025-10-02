@@ -10,9 +10,8 @@ use App\Models\PasswordCreation;
 use App\Models\User;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
 use Illuminate\Http\Request;
-use Mail;
-use Str;
-
+use Illuminate\Support\Facades\Mail;
+use Illuminate\Support\Str; 
 class EmpleadoController extends Controller
 {
     public function listarEmpleados(){
@@ -111,4 +110,15 @@ class EmpleadoController extends Controller
         return ResponseHelper::success($empleado, 'Empleado eliminado correctamente');
     }
 
+    public function obtenerEmpleado($id_empleado){
+        $empleado = Empleado::find($id_empleado);
+        if(!$empleado){
+            return ResponseHelper::notFound("Empleado no encontrado");
+        }
+
+        return ResponseHelper::success($empleado, "Empleado obtenido correctamente");
+    }
+
+    
+    
 }

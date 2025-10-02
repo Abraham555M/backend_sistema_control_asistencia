@@ -10,7 +10,7 @@ use Illuminate\Http\Request;
 
 class CuentaController extends Controller
 {
-   public function validarToken($token)
+    public function validarToken($token)
     {
         $registro = PasswordCreation::where('token', $token)->first();
 
