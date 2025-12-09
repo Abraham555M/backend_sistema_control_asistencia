@@ -9,6 +9,8 @@ use App\Http\Controllers\Api\HorarioController;
 use App\Http\Controllers\Api\IncidenciaController;
 use App\Http\Controllers\Api\PermisoController;
 use App\Http\Controllers\Api\TipoIncidenciaController;
+use App\Http\Controllers\Api\TipoPermisoController;
+use App\Models\TipoPermiso;
 
 Route::prefix('/generos')->group(function () {
     Route::get('/lista-generos', [GeneroController::class, 'listarGeneros']);
@@ -30,6 +32,13 @@ Route::prefix('/empleados')->group(function(){
     Route::put('/actualizar-empleado/{id_empleado}', [EmpleadoController::class, 'actualizarEmpleado']);
     Route::delete('/eliminar-empleado/{id_empleado}', [EmpleadoController::class, 'eliminarEmpleado']);
     Route::get('/obtener-empleado/{id_empleado}', [EmpleadoController::class, 'obtenerEmpleado']);
+    Route::get('/filtrar-empleado-estado/{estado}', [EmpleadoController::class, 'filtrarPorEstado']);
+    Route::post('/filtrar-empleado-fecha', [EmpleadoController::class, 'filtrarPorFechaIngreso']);
+    Route::post('/filtrar-empleado-nombre', [EmpleadoController::class, 'filtrarPorNombres']);
+});
+
+Route::prefix("tipo-permiso")->group(function(){
+    Route::get("/lista-tipo-permiso", [TipoPermisoController::class, 'listarTipoPermiso']); 
 });
 
 Route::middleware('auth:sanctum')->prefix('/permisos')->group(function () {

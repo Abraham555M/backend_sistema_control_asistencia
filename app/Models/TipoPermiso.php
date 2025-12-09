@@ -12,5 +12,5 @@ class TipoPermiso extends Model
     protected $table = 'tipo_permiso';
     protected $primaryKey = 'id_tipo_permiso';
 
-    protected $fillable = ['nom_tipo_permiso'];
+    protected $fillable = ['nom_tipo_permiso', 'est_tipo_permiso'];
 }

@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 class EmpleadoController extends Controller
 {
     public function listarEmpleados(){
-        $empleados = Empleado::select('id_empleado','nom_empleado','ape_empleado','tel_empleado','est_empleado')
+        $empleados = Empleado::select('id_empleado','nom_empleado','ape_empleado','tel_empleado','ema_empleado','est_empleado')
             ->get()
             ->where('est_empleado',1);
 
@@ -122,6 +122,70 @@ class EmpleadoController extends Controller
         return ResponseHelper::success($empleado, "Empleado obtenido correctamente");
     }
 
+    public function filtrarPorEstado($estado)
+    {
+        $empleados = Empleado::select('id_empleado','nom_empleado','ape_empleado','tel_empleado','doc_empleado','est_empleado')
+            ->where('est_empleado', $estado) // primero filtras
+            ->get(); // luego ejecutas la consulta
 
-    
+        if ($empleados->isEmpty()) { // mejor usar isEmpty() en colecciones
+            return ResponseHelper::notFound("Empleados no encontrados");
+        }
+
+        return ResponseHelper::success($empleados, "Empleados por estado");
+    }
+
+    public function filtrarPorFechaIngreso(Request $request)
+    {
+        $request->validate([
+            'fechaIni' => 'required|date_format:Y-m-d',
+            'fechaFin' => 'required|date_format:Y-m-d|after_or_equal:fechaIni',
+        ]);
+
+        $fechaIni = $request->fechaIni;
+        $fechaFin = $request->fechaFin;
+
+        $empleados = Empleado::select(
+                'id_empleado',
+                'nom_empleado',
+                'ape_empleado',
+                'tel_empleado',
+                'doc_empleado',
+                'est_empleado',
+                'fch_reg_empleado'
+            )
+            ->whereBetween('fch_reg_empleado', [$fechaIni, $fechaFin]) 
+            ->get();
+
+        if ($empleados->isEmpty()) {
+            return ResponseHelper::notFound("No se encontraron empleados registrados en el rango de fechas");
+        }
+
+        return ResponseHelper::success($empleados, "Empleados registrados entre $fechaIni y $fechaFin");
+    }    
+
+    public function filtrarPorNombres(Request $request){
+        $request->validate([
+            "valor" => "required|string",
+        ]);
+        $valor = $request->valor; 
+
+        $empleados = Empleado::select(
+                'id_empleado',
+                'nom_empleado',
+                'ape_empleado',
+                'tel_empleado',
+                'doc_empleado',
+                'est_empleado'
+            )
+            ->where('nom_empleado', 'LIKE', "%{$valor}%")
+            ->orWhere('ape_empleado', 'LIKE', "%{$valor}%")
+            ->get();
+
+        if ($empleados->isEmpty()) {
+            return ResponseHelper::notFound("No se encontraron empleados con el nombre o apellido '$valor'");
+        }
+
+        return ResponseHelper::success($empleados, "Resultados de búsqueda para '$valor'");
+    }
 }
