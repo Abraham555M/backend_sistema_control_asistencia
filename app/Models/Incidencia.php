@@ -15,16 +15,22 @@ class Incidencia extends Model
     protected $fillable = [
         'id_empleado',
         'id_tipo_incidencia',
+        'id_empleado_revision',
         'fch_incidencia',
-        'des_incidencia'
+        'des_incidencia',
+        'est_incidencia'
     ];
 
     public function empleado()
     {
         return $this->belongsTo(Empleado::class, 'id_empleado', 'id_empleado');
     }
-    public function tipo_incidencia()
+    public function tipoIncidencia()
     {
         return $this->belongsTo(TipoIncidencia::class, 'id_tipo_incidencia', 'id_tipo_incidencia');
+    }
+    public function empleadoRevision()
+    {
+        return $this->belongsTo(Empleado::class, 'id_empleado_revision', 'id_empleado');
     }
 }

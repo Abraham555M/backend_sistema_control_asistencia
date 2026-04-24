@@ -12,5 +12,17 @@ class TipoPermiso extends Model
     protected $table = 'tipo_permiso';
     protected $primaryKey = 'id_tipo_permiso';
 
-    protected $fillable = ['nom_tipo_permiso', 'est_tipo_permiso'];
+    protected $fillable = [
+        'nom_tipo_permiso', 
+        'est_tipo_permiso'
+    ];
+
+    public function permisos()
+    {
+        return $this->hasMany(
+            Permiso::class,
+            'id_tipo_permiso',
+            'id_tipo_permiso'
+        );
+    }
 }

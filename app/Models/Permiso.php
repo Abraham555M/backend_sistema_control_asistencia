@@ -29,4 +29,8 @@ class Permiso extends Model
     {
         return $this->belongsTo(TipoPermiso::class, 'id_tipo_permiso', 'id_tipo_permiso');
     }
+    public function empleadoRevision()
+    {
+        return $this->belongsTo(Empleado::class, 'id_empleado_revision', 'id_empleado');
+    }
 }

@@ -26,12 +26,12 @@ class Empleado extends Model
         'fch_reg_empleado'
     ];
 
-     public function genero()
+    public function genero()
     {
         return $this->belongsTo(Genero::class, 'id_genero', 'id_genero');
     }
     // Relación: este usuario tiene un rol
-    public function rol()
+    public function rolUsuario()
     {
         return $this->belongsTo(RolUsuario::class, 'id_rol_usuario', 'id_rol_usuario');
     }
@@ -56,5 +56,8 @@ class Empleado extends Model
     {
         return $this->hasMany(User::class, 'id_empleado', 'id_empleado');
     }
-
+    public function asistenciasHistorial()
+    {
+        return $this->hasMany(AsistenciaHistorial::class, 'id_empleado', 'id_empleado');
+    }
 }

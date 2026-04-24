@@ -13,4 +13,13 @@ class TipoIncidencia extends Model
     protected $primaryKey = 'id_tipo_incidencia';
 
     protected $fillable = ['nom_tipo_incidencia'];
+
+    public function incidencias()
+    {
+        return $this->hasMany(
+            Incidencia::class,
+            'id_tipo_incidencia',
+            'id_tipo_incidencia'
+        );
+    }
 }
