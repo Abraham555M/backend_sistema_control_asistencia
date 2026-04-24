@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('tipo_permiso', function (Blueprint $table) {
             $table->id("id_tipo_permiso");
-            $table->string("nom_tipo_permiso");
-            $table->boolean("est_tipo_permiso")->default(1); 
+            $table->string("nom_tipo_permiso")->unique();
+            $table->tinyInteger("est_tipo_permiso")->default(1); 
             $table->timestamps();
         });
     }

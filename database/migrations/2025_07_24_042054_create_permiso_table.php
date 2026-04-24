@@ -16,11 +16,15 @@ return new class extends Migration
             $table->date("fch_ini_permiso"); // fecha inicio
             $table->date("fch_fin_permiso"); // fecha fin
             $table->text("mot_permiso")->nullable();
-            $table->integer("est_permiso")->default(1);
+            $table->tinyInteger("est_permiso")->default(1);
 
             $table->unsignedBigInteger('id_empleado');
             $table->foreign('id_empleado')->references('id_empleado')->on('empleado');
-             $table->unsignedBigInteger('id_tipo_permiso');
+
+            $table->unsignedBigInteger('id_empleado_revision');
+            $table->foreign('id_empleado_revision')->references('id_empleado')->on('empleado');
+
+            $table->unsignedBigInteger('id_tipo_permiso');
             $table->foreign('id_tipo_permiso')->references('id_tipo_permiso')->on('tipo_permiso');
             $table->timestamps();
         });

@@ -13,20 +13,22 @@ return new class extends Migration
     {
         Schema::create('empleado', function (Blueprint $table) {
             $table->id("id_empleado");
-            $table->string(column: "nom_empleado");
-            $table->string("ape_empleado");
+            $table->string("nom_empleado", 200);
+            $table->string("ape_empleado", 200);
             $table->date('fch_nac_empleado');
             $table->string("ema_empleado")->unique();
             $table->string("doc_empleado",8)->unique();
             $table->string("tel_empleado", 9);
             $table->text("img_empleado")->nullable(); 
             $table->integer("est_empleado")->default(1);
-            $table->date("fch_reg_empleado");
+            $table->dateTime("fch_reg_empleado");
 
             $table->unsignedBigInteger('id_genero');
             $table->foreign('id_genero')->references('id_genero')->on('genero');
-             $table->unsignedBigInteger('id_rol_usuario');
+
+            $table->unsignedBigInteger('id_rol_usuario');
             $table->foreign('id_rol_usuario')->references('id_rol_usuario')->on('rol_usuario');
+            
             $table->timestamps();
         });
     }

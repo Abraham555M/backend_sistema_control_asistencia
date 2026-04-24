@@ -11,15 +11,15 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('asistencia', function (Blueprint $table) {
-            $table->id("id_asistencia");
-            $table->time("hor_asistencia"); // hora de ingreso
-            $table->decimal("hor_tot_asistencia", 5, 2); // horas totales trabajadas
-            $table->text("obs_asistencia")->nullable(); //observacion
-            $table->tinyInteger("est_asistencia")->default(1);  // presente, tardanza, ausente, permiso
+        Schema::create('asistencia_historial', function (Blueprint $table) {
+            $table->id('id_asistencia_historial');
+            $table->date('fch_asistencia_historial');
+            $table->time('hor_tra_asistencia_historial')->nullable();
+            $table->decimal('horas_trabajadas_totales', 5, 2)->nullable();
 
             $table->unsignedBigInteger('id_empleado');
             $table->foreign('id_empleado')->references('id_empleado')->on('empleado');
+            
             $table->timestamps();
         });
     }
@@ -29,6 +29,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('asistencia');
+        Schema::dropIfExists('asistencia_historial');
     }
 };
