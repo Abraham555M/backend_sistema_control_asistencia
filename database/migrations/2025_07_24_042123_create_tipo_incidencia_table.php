@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('tipo_incidencia', function (Blueprint $table) {
             $table->id("id_tipo_incidencia");
-            $table->string("nom_tipo_incidencia")->unique();
+            $table->string("nom_tipo_incidencia", 150)->unique();
             $table->tinyInteger("est_tipo_incidencia")->default(1); 
             $table->timestamps();
         });
