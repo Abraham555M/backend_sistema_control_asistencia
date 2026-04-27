@@ -5,9 +5,9 @@ namespace Database\Factories;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RolUsuario>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\RolEmpleado>
  */
-class RolUsuarioFactory extends Factory
+class RolEmpleadoFactory extends Factory
 {
     protected static $roles = [
         'Administrador',
@@ -17,7 +17,7 @@ class RolUsuarioFactory extends Factory
     {
         $rol = array_shift(self::$roles);
         return [
-            'nom_rol_usuario' => $rol,
+            'nom_rol_empleado' => $rol,
         ];
     }
 }
